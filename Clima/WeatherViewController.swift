@@ -37,7 +37,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON {
             response in
             if response.result.isSuccess {
-                print("Success! We got the weather data")
+                print(Constants.WeatherViewControllerConstants.successWeatherDataMessage)
                 
                 let weatherJson: JSON = JSON(response.result.value!)
                 
@@ -45,7 +45,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
                 
             } else {
                 print("Error \(String(describing: response.result.error))")
-                self.cityLabel.text = "Sorry, conection issues"
+                self.cityLabel.text = Constants.WeatherViewControllerConstants.connectionIssues
             }
         }
     }
@@ -64,7 +64,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
             updateUIWithWeatherData()
             
         } else {
-            cityLabel.text = "Data unavailable"
+            cityLabel.text = Constants.WeatherViewControllerConstants.dataUnavailable
         }
     }
 
@@ -92,7 +92,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        cityLabel.text = "Location Unavailable"
+        cityLabel.text = Constants.WeatherViewControllerConstants.locationUnavailable
     }
     
     //MARK: - Change City Delegate methods
@@ -105,12 +105,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate, Change
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "changeCityName" {
+        if segue.identifier == Constants.WeatherViewControllerConstants.changeCityNameIdentifier {
             let destionation = segue.destination as! ChangeCityViewController
             destionation.delegate = self
         }
     }
-    
 }
-
-
